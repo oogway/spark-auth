@@ -15,5 +15,8 @@ jdk:
 script:
   - ./gradlew build
 
-after_success:
-  - ./gradlew bintrayUpload
+deploy:
+  provider: script
+  script: ./gradlew bintrayUpload
+  on:
+    branch: prod
