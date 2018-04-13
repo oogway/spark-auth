@@ -57,8 +57,8 @@ publishing {
 }
 
 bintray {
-    user = property('bintray_username')
-    key = property('bintray_password')
+    user = property('bintray.username')
+    key = property('bintray.password')
     configurations = ['archives']
     pkg {
         publish = true
