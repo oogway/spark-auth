@@ -57,8 +57,8 @@ publishing {
 }
 
 bintray {
-    user = property('bintray.username')
-    key = property('bintray.password')
+    user = hasProperty('bintray_username') ? bintray_username : System.getenv('BINTRAY_USERNAME')
+    key = hasProperty('bintray_password') ? bintray_password : System.getenv('BINTRAY_PASSWORD')
     configurations = ['archives']
     pkg {
         publish = true
