@@ -15,5 +15,5 @@ jdk:
 script:
   - ./gradlew build
 
-after_install:
+after_success:
   - ./gradlew bintrayUpload
