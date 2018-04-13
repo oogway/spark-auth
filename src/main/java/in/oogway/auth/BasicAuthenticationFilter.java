@@ -1,18 +1,17 @@
-package com.oogway.auth;
+package in.oogway.auth;
 
-import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-//import org.apache.commons.lang3.StringUtils;
+// import org.apache.commons.lang3.StringUtils;
 
 public class BasicAuthenticationFilter implements Filter {
 
@@ -32,13 +31,13 @@ public class BasicAuthenticationFilter implements Filter {
       FileInputStream stream = new FileInputStream(path);
       BufferedReader br = new BufferedReader(new InputStreamReader(stream));
 
-      //Reset credentials to be overridden by entries from file.
-      //There is a possibility that some entries might have changed or been discarded.
+      // Reset credentials to be overridden by entries from file.
+      // There is a possibility that some entries might have changed or been discarded.
       Credentials = new HashMap<String, String>();
 
       String strLine;
 
-      //Read File Line By Line
+      // Read File Line By Line
       while ((strLine = br.readLine()) != null) {
         // Print the content on the console
         if (strLine.isEmpty() || strLine.startsWith("#")) {
@@ -57,7 +56,7 @@ public class BasicAuthenticationFilter implements Filter {
         Credentials.put(_username, _password);
       }
 
-      //Close the input stream
+      // Close the input stream
       br.close();
     } catch (IOException e) {
       LOG.warn(e.toString());
@@ -85,7 +84,8 @@ public class BasicAuthenticationFilter implements Filter {
   }
 
   @Override
-  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+  public void doFilter(
+      ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
       throws IOException, ServletException {
 
     credentialsEngine();
@@ -134,8 +134,7 @@ public class BasicAuthenticationFilter implements Filter {
   }
 
   @Override
-  public void destroy() {
-  }
+  public void destroy() {}
 
   private void unauthorized(HttpServletResponse response, String message) throws IOException {
     String realm = "Protected";
@@ -146,5 +145,4 @@ public class BasicAuthenticationFilter implements Filter {
   private void unauthorized(HttpServletResponse response) throws IOException {
     unauthorized(response, "Unauthorized");
   }
-
 }

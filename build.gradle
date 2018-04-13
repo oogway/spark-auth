@@ -1,0 +1,75 @@
+plugins {
+    id 'com.github.sherter.google-java-format' version '0.6'
+    id "com.jfrog.bintray" version "1.7.3"
+}
+
+googleJavaFormat {
+    toolVersion = '1.5'
+}
+
+group 'in.oogway.auth'
+version '0.0.1'
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+ext.junitJupiterVersion  = '5.0.0'
+
+jar {
+    from sourceSets.main.output
+}
+
+dependencies {
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+    compile "org.slf4j:slf4j-api:1.6.2"
+    compile "commons-codec:commons-codec:1.7"
+    compile "org.apache.commons:commons-lang3:3.4"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.5'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+
+        // publish the <project> jar as a standalone artifact
+        mavenJar(MavenPublication) {
+            from components.java
+            version = project.version
+            artifactId = project.name
+            groupId = project.group
+            version project.version
+        }
+    }
+}
+
+bintray {
+    user = property('bintray_username')
+    key = property('bintray_password')
+    configurations = ['archives']
+    pkg {
+        publish = true
+        repo = 'Plumbox'
+        name = 'spark-auth'
+        desc = "Adds authentication to all Spark Interfaces"
+        userOrg = 'oogway'
+        licenses = ['Apache-2.0']
+        websiteUrl = 'https://github.com/oogway/spark-auth'
+        issueTrackerUrl = 'https://github.com/oogway/spark-auth/issues'
+        vcsUrl = 'https://github.com/oogway/spark-auth'
+    }
+}
+
